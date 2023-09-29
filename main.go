@@ -11,6 +11,7 @@ import (
 
 func main() {
 	log.SetFlags(log.Llongfile)
+
 	fmt.Println(text.WaitREGEXP)
 	re, err := getREGEXP()
 	if err != nil {

@@ -50,6 +50,7 @@ func checkFileConflict(compare map[string]string, file string) (err error) {
 
 func showCompare(compare map[string]string) {
 	for oldF, newF := range compare {
-		fmt.Println(oldF, "-->", newF)
+		fmt.Println("["+oldF+"]", "-->\n", "["+newF+"]")
+		fmt.Println(oldF == newF)
 	}
 }

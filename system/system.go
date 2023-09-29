@@ -14,7 +14,7 @@ func ModifyFilePath(compare map[string]string) {
 		go func(oldF, newF string) {
 			defer wg.Done()
 			if err := os.Rename(oldF, newF); err != nil {
-				log.Println(err)
+				log.Println(err, oldF, newF)
 			}
 		}(oldF, newF)
 	}
