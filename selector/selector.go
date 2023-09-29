@@ -18,6 +18,7 @@ func Selector(re *regexp.Regexp, files []string) (err error) {
 	if _, err = fmt.Scanln(&part); err != nil {
 		return
 	}
+
 	switch mtd {
 	case 0:
 		return

@@ -1,23 +1,36 @@
 package parse
 
 import (
-	"bufio"
+	"errors"
+	"fmt"
+	"io"
 	"os"
+	"strings"
 )
 
+const DefaultBufSize = 5 * 1024
+
 func Files() (files []string, err error) {
-	var filesPath string
-	fp := bufio.NewReader(os.Stdin)
-	filesPath, err = fp.ReadString('\n')
-	if err != nil {
-		return
+	var buf = make([]byte, DefaultBufSize)
+	if _, err = io.ReadFull(os.Stdin, buf); err != nil {
+		if errors.Is(err, io.ErrUnexpectedEOF) {
+			err = nil
+		} else {
+			return
+		}
 	}
-	files = splitFiles(filesPath)
+	fmt.Scanln()
+	filesPath := string(buf)
+	if filesPath[0] == '"' {
+		files = splitFilesExistSpace(filesPath)
+	} else {
+		files = strings.Split(filesPath, " ")
+	}
 
 	return
 }
 
-func splitFiles(filePath string) (files []string) {
+func splitFilesExistSpace(filePath string) (files []string) {
 	l := len(filePath)
 	for i := 0; i < l; i++ {
 		if filePath[i] != '"' {
